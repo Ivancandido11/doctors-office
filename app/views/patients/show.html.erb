@@ -1,18 +1,13 @@
 <h1><%= @patient.name%></h1>
-
-
 <% @patient.doctors.uniq.each do |doctor|%>
-<p>
-<%= link_to doctor.name, doctor%>
-<% doctor.appointments.each do |appt|%>
-<%= appt.date%>
-<%= appt.patient.name%>
-</p>
-
-<br>
-<br>
-
- <% end %>
-
+  <p>
+    <%= link_to doctor.name, doctor%>: <br>
+      <% doctor.appointments.where(patient_id: @patient.id).each do |appt|%>
+        <%= appt.date.strftime("%B %e, %Y")%>:
+        <%= appt.notes %>
+        <br>
+        <br>
+    <% end %>
+  </p>
 <% end %>
 
